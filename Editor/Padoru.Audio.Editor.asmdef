@@ -1,0 +1,19 @@
+{
+    "name": "Padoru.Audio.Editor",
+    "references": [
+        "GUID:8cb9a5646f2f1b44aa7408d1254022ca",
+        "GUID:3701bd18d4a733942bc4cd4f7715906b",
+        "GUID:93aea5e23fcb67343a23f8bc306ad1bc"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
