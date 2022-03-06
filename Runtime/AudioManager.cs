@@ -1,22 +1,17 @@
 ﻿using UnityEngine;
-using Padoru.Core;
 using Debug = Padoru.Diagnostics.Debug;
 
 namespace Padoru.Audio
 {
-    public class AudioManager : MonoBehaviour, IInitializable, IShutdowneable
+    public class AudioManager
     {
-        [SerializeField] private AudioManagerDatabase database;
-        [SerializeField] private AudioSourceRetriever retriever;
+        private IAudioManagerDatabase database;
+        private IAudioSourceRetriever retriever;
 
-        public void Init()
+        public AudioManager(IAudioManagerDatabase database, IAudioSourceRetriever retriever)
         {
-            Locator.RegisterService(this);
-        }
-
-        public void Shutdown()
-        {
-            Locator.UnregisterService<AudioManager>();
+            this.database = database;
+            this.retriever = retriever;
         }
 
         internal AudioFile GetAudioFile(string id)

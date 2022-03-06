@@ -53,7 +53,7 @@ namespace Padoru.Audio
         {
             Init();
 
-            if (audioFile.PlayOnAwake)
+            if (audioFile != null && audioFile.PlayOnAwake)
             {
                 Play();
             }
@@ -78,7 +78,7 @@ namespace Padoru.Audio
 
         private void OnEnable()
         {
-            if (audioFile.PlayOnAwake)
+            if (audioFile != null && audioFile.PlayOnAwake)
             {
                 Play();
             }

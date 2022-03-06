@@ -2,18 +2,17 @@
 
 namespace Padoru.Audio
 {
-    [CreateAssetMenu(menuName = "Padoru/Audio/AudioRetriever/Creator")]
-    public class CreatorAudioRetriever : AudioSourceRetriever
+    public class CreatorAudioRetriever : IAudioSourceRetriever
     {
-        public override AudioSource GetAudio()
+        public AudioSource GetAudio()
         {
             var go = new GameObject("AudioSource");
             return go.AddComponent<AudioSource>();
         }
 
-        public override void ReturnAudio(AudioSource audioSource)
+        public void ReturnAudio(AudioSource audioSource)
         {
-            Destroy(audioSource.gameObject);
+            Object.Destroy(audioSource.gameObject);
         }
     }
 }
