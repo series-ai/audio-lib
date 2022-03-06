@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Padoru.Core;
+using Debug = Padoru.Diagnostics.Debug;
 
 namespace Padoru.Audio
 {
@@ -18,8 +19,14 @@ namespace Padoru.Audio
             Locator.UnregisterService<AudioManager>();
         }
 
-        public AudioFile GetAudioFile(string id)
+        internal AudioFile GetAudioFile(string id)
         {
+            if (database == null)
+            {
+                Debug.LogError($"Could not get audio file, the database is null");
+                return null;
+            }
+
             if (!database.Items.ContainsKey(id))
             {
                 Debug.LogError("Invalid key " + id);
@@ -29,12 +36,12 @@ namespace Padoru.Audio
             return database.Items[id];
         }
 
-        public AudioSource GetAudioSource()
+        internal AudioSource GetAudioSource()
         {
             return retriever.GetAudio();
         }
 
-        public void ReturnAudioSource(AudioSource audioSource)
+        internal void ReturnAudioSource(AudioSource audioSource)
         {
             retriever.ReturnAudio(audioSource);
         }

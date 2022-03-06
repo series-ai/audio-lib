@@ -1,12 +1,11 @@
 ﻿using Padoru.Core;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Padoru.Audio
 {
-    public abstract class PadoruAudioSource<T> : MonoBehaviour where T : System.Enum
+    public class PadoruAudioSource : MonoBehaviour
     {
-        [SerializeField] private T fileId;
+        [SerializeField] private string fileId;
         [SerializeField] private bool trackObject;
 
         private AudioManager audioManager;
@@ -54,7 +53,7 @@ namespace Padoru.Audio
         {
             Init();
 
-            if (audioFile != null && audioFile.PlayOnAwake)
+            if (audioFile.PlayOnAwake)
             {
                 Play();
             }
@@ -72,14 +71,14 @@ namespace Padoru.Audio
                 return;
             }
 
-            audioFile = audioManager.GetAudioFile(fileId.ToString());
+            audioFile = audioManager.GetAudioFile(fileId);
 
             initialized = true;
         }
 
         private void OnEnable()
         {
-            if (audioFile != null && audioFile.PlayOnAwake)
+            if (audioFile.PlayOnAwake)
             {
                 Play();
             }
@@ -92,7 +91,7 @@ namespace Padoru.Audio
 
         private void Update()
         {
-            if(isPlaying && !audioFile.Loop)
+            if(audioFile  != null && isPlaying && !audioFile.Loop)
             {
                 if(Time.time - playTime >= audioDuration)
                 {
@@ -101,7 +100,6 @@ namespace Padoru.Audio
             }
         }
 
-        [Button, HideInEditorMode]
         public void Play()
         {
             if(!initialized)
@@ -126,7 +124,6 @@ namespace Padoru.Audio
             audioSource.Play();
         }
 
-        [Button, HideInEditorMode]
         public void Stop()
         {
             if(audioSource != null)

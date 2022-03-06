@@ -1,9 +1,9 @@
 {
     "name": "Padoru.Audio.Editor",
+    "rootNamespace": "",
     "references": [
         "GUID:8cb9a5646f2f1b44aa7408d1254022ca",
-        "GUID:3701bd18d4a733942bc4cd4f7715906b",
-        "GUID:93aea5e23fcb67343a23f8bc306ad1bc"
+        "GUID:b27f6447d2cfe65419f9261de7b4f409"
     ],
     "includePlatforms": [
         "Editor"
