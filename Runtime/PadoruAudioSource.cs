@@ -1,4 +1,5 @@
 ﻿using Padoru.Core;
+using System;
 using UnityEngine;
 
 namespace Padoru.Audio
@@ -23,8 +24,7 @@ namespace Padoru.Audio
             {
                 if (audioFile == null)
                 {
-                    Debug.LogError("Null audio file", gameObject);
-                    return false;
+                    throw new Exception("Null audio file");
                 }
 
                 if (audioFile.Clip == null)
@@ -115,6 +115,11 @@ namespace Padoru.Audio
             isPlaying = true;
 
             audioSource = audioManager.GetAudioSource();
+
+            if(audioSource == null)
+            {
+                throw new Exception($"Audio manager failed to return an audio source");
+            }
 
             SetupAudioSource();
 
