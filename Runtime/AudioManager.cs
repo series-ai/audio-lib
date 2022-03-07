@@ -3,7 +3,7 @@ using Debug = Padoru.Diagnostics.Debug;
 
 namespace Padoru.Audio
 {
-    public class AudioManager
+    public class AudioManager : IAudioManager
     {
         private IAudioManagerDatabase database;
         private IAudioSourceRetriever retriever;
@@ -14,7 +14,7 @@ namespace Padoru.Audio
             this.retriever = retriever;
         }
 
-        internal AudioFile GetAudioFile(string id)
+        public AudioFile GetAudioFile(string id)
         {
             if (database == null)
             {
@@ -31,12 +31,12 @@ namespace Padoru.Audio
             return database.Items[id];
         }
 
-        internal AudioSource GetAudioSource()
+        public AudioSource GetAudioSource()
         {
             return retriever.GetAudio();
         }
 
-        internal void ReturnAudioSource(AudioSource audioSource)
+        public void ReturnAudioSource(AudioSource audioSource)
         {
             retriever.ReturnAudio(audioSource);
         }

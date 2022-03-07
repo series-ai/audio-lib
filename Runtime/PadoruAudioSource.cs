@@ -8,7 +8,7 @@ namespace Padoru.Audio
         [SerializeField] private string fileId;
         [SerializeField] private bool trackObject;
 
-        private AudioManager audioManager;
+        private IAudioManager audioManager;
         private AudioFile audioFile;
         private AudioSource audioSource;
         private bool isPlaying;
@@ -63,7 +63,7 @@ namespace Padoru.Audio
         {
             if (initialized) return;
 
-            audioManager = Locator.GetService<AudioManager>();
+            audioManager = Locator.GetService<IAudioManager>();
 
             if (audioManager == null)
             {
