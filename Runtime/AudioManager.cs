@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Debug = Padoru.Diagnostics.Debug;
 
 namespace Padoru.Audio
@@ -18,14 +19,17 @@ namespace Padoru.Audio
         {
             if (database == null)
             {
-                Debug.LogError($"Could not get audio file, the database is null");
-                return null;
+                throw new Exception($"Could not get audio file, the database is null");
+            }
+
+            if(database.Items == null)
+            {
+                throw new Exception($"Could not get audio file, the database items collection is null");
             }
 
             if (!database.Items.ContainsKey(id))
             {
-                Debug.LogError("Invalid key " + id);
-                return null;
+                throw new Exception($"Invalid key {id}");
             }
 
             return database.Items[id];
@@ -33,11 +37,26 @@ namespace Padoru.Audio
 
         public AudioSource GetAudioSource()
         {
+            if (retriever == null)
+            {
+                throw new Exception($"Could not get audio source, the retriever is null");
+            }
+
             return retriever.GetAudio();
         }
 
         public void ReturnAudioSource(AudioSource audioSource)
         {
+            if (audioSource == null)
+            {
+                throw new Exception($"Could not return a null audio source");
+            }
+
+            if (retriever == null)
+            {
+                throw new Exception($"Could not return audio source, the retriever is null");
+            }
+
             retriever.ReturnAudio(audioSource);
         }
     }
