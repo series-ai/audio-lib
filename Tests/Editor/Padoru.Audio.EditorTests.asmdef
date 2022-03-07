@@ -1,0 +1,20 @@
+{
+    "name": "Padoru.Audio.EditorTests",
+    "references": [
+        "GUID:8cb9a5646f2f1b44aa7408d1254022ca",
+        "GUID:8fd7113a1b80cf14c94fab47b407d67b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
