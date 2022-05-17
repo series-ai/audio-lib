@@ -1,15 +1,15 @@
 ﻿using Padoru.Core;
-using Sirenix.OdinInspector;
+using System;
 using UnityEngine;
 
 namespace Padoru.Audio
 {
-    public abstract class PadoruAudioSource<T> : MonoBehaviour where T : System.Enum
+    public class PadoruAudioSource : MonoBehaviour
     {
-        [SerializeField] private T fileId;
+        [SerializeField] private string fileId;
         [SerializeField] private bool trackObject;
 
-        private AudioManager audioManager;
+        private IAudioManager audioManager;
         private AudioFile audioFile;
         private AudioSource audioSource;
         private bool isPlaying;
@@ -24,8 +24,7 @@ namespace Padoru.Audio
             {
                 if (audioFile == null)
                 {
-                    Debug.LogError("Null audio file", gameObject);
-                    return false;
+                    throw new Exception("Null audio file");
                 }
 
                 if (audioFile.Clip == null)
@@ -64,7 +63,7 @@ namespace Padoru.Audio
         {
             if (initialized) return;
 
-            audioManager = Locator.GetService<AudioManager>();
+            audioManager = Locator.GetService<IAudioManager>();
 
             if (audioManager == null)
             {
@@ -72,7 +71,7 @@ namespace Padoru.Audio
                 return;
             }
 
-            audioFile = audioManager.GetAudioFile(fileId.ToString());
+            audioFile = audioManager.GetAudioFile(fileId);
 
             initialized = true;
         }
@@ -92,7 +91,7 @@ namespace Padoru.Audio
 
         private void Update()
         {
-            if(isPlaying && !audioFile.Loop)
+            if(audioFile  != null && isPlaying && !audioFile.Loop)
             {
                 if(Time.time - playTime >= audioDuration)
                 {
@@ -101,7 +100,6 @@ namespace Padoru.Audio
             }
         }
 
-        [Button, HideInEditorMode]
         public void Play()
         {
             if(!initialized)
@@ -118,6 +116,11 @@ namespace Padoru.Audio
 
             audioSource = audioManager.GetAudioSource();
 
+            if(audioSource == null)
+            {
+                throw new Exception($"Audio manager failed to return an audio source");
+            }
+
             SetupAudioSource();
 
             playTime = Time.time;
@@ -126,7 +129,6 @@ namespace Padoru.Audio
             audioSource.Play();
         }
 
-        [Button, HideInEditorMode]
         public void Stop()
         {
             if(audioSource != null)
