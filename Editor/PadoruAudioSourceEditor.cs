@@ -55,22 +55,26 @@ namespace Padoru.Audio.Editor
 
         private StringListSearchProvider GetSearchProvider()
         {
-            var audioManagerDatabases = AssetDatabase.FindAssets($"t:{typeof(AudioManagerDatabase)}");
+            var audioManagerDatabases = AssetDatabase.FindAssets($"t:{typeof(AudioManagerDatabaseSO)}");
 
             if (audioManagerDatabases == null || audioManagerDatabases.Length <= 0)
             {
-                return new StringListSearchProvider($"No {typeof(AudioManagerDatabase)} found", new List<string>(), null);
+                var invalidPorivder = CreateInstance<StringListSearchProvider>();
+                invalidPorivder.Init($"No {nameof(AudioManagerDatabaseSO)} found", new List<string>(), null);
+                return invalidPorivder;
             }
 
             if(audioManagerDatabases.Length > 1)
             {
-                Debug.LogWarning($"There are more than one {typeof(AudioManagerDatabase)} in the project, window will only display values on the first one found");
+                Debug.LogWarning($"There are more than one {nameof(AudioManagerDatabaseSO)} in the project, window will only display values on the first one found");
             }
 
             var audioManagerDatabasePath = AssetDatabase.GUIDToAssetPath(audioManagerDatabases[0]);
-            var audioManagerDatabase = (AudioManagerDatabase)AssetDatabase.LoadAssetAtPath(audioManagerDatabasePath, typeof(AudioManagerDatabase));
+            var audioManagerDatabase = (AudioManagerDatabaseSO)AssetDatabase.LoadAssetAtPath(audioManagerDatabasePath, typeof(AudioManagerDatabaseSO));
 
-            return new StringListSearchProvider("List", audioManagerDatabase.Items.Keys.ToList(), OnFileIdSelected);
+            var provider = CreateInstance<StringListSearchProvider>();
+            provider.Init("List", audioManagerDatabase.Items.Keys.ToList(), OnFileIdSelected);
+            return provider;
         }
     }
 }
