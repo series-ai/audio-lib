@@ -18,6 +18,8 @@ namespace Padoru.Audio
         private float audioDuration;
         private bool initialized;
 
+        public event Action<PadoruAudioSource> OnAudioFinish;
+
         private bool CanPlay
         {
             get
@@ -51,7 +53,10 @@ namespace Padoru.Audio
 
         private void Start()
         {
-            Init();
+            if (!initialized)
+            {
+                Init();
+            }
 
             if (audioFile != null && audioFile.PlayOnAwake)
             {
@@ -59,10 +64,8 @@ namespace Padoru.Audio
             }
         }
 
-        private void Init()
+        public void Init()
         {
-            if (initialized) return;
-
             audioManager = Locator.GetService<IAudioManager>();
 
             if (audioManager == null)
@@ -95,7 +98,7 @@ namespace Padoru.Audio
             {
                 if(Time.time - playTime >= audioDuration)
                 {
-                    OnAudioStop();
+                    FinishAudio();
                 }
             }
         }
@@ -136,10 +139,18 @@ namespace Padoru.Audio
                 audioSource.Stop();
             }
 
-            OnAudioStop();
+            FinishAudio();
         }
 
-        private void OnAudioStop()
+        /// <summary>
+        /// If you want this change to take effect you need to initialize again
+        /// </summary>
+        public void SetAudioFileId(string fileId)
+        {
+            this.fileId = fileId;
+        }
+
+        private void FinishAudio()
         {
             if (audioSource != null)
             {
@@ -149,6 +160,8 @@ namespace Padoru.Audio
             }
 
             isPlaying = false;
+
+            OnAudioFinish?.Invoke(this);
         }
 
         private void SetupAudioSource()
