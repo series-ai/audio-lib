@@ -167,6 +167,7 @@ namespace Padoru.Audio
         private void SetupAudioSource()
         {
             audioSource.playOnAwake = false;
+            audioSource.outputAudioMixerGroup = audioFile.Mixer;
             audioSource.clip = audioFile.Clip;
             audioSource.volume = audioFile.Volume;
             audioSource.loop = audioFile.Loop;
