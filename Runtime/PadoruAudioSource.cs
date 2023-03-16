@@ -66,7 +66,7 @@ namespace Padoru.Audio
 
         public void Init()
         {
-            audioManager = Locator.GetService<IAudioManager>();
+            audioManager = Locator.Get<IAudioManager>();
 
             if (audioManager == null)
             {
