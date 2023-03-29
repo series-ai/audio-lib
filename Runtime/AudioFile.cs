@@ -8,7 +8,7 @@ namespace Padoru.Audio
     {
         [SerializeField] private AudioClip clip;
         [SerializeField] private AudioMixerGroup mixer;
-        [SerializeField, Range(0, 1)] private float volume;
+        [SerializeField, Range(0, 1)] private float volume = 1f;
         [SerializeField] private bool playOnAwake;
         [SerializeField] private bool loop;
         [SerializeField] private bool disabled;
