@@ -11,7 +11,7 @@ namespace Padoru.Audio.Tests
         private string audioFileId1 = "Audio1";
 
         [Test]
-        public void GetAudioFile_WhenDatabseNull_ShouldThrow()
+        public void GetAudioFile_WhenDictionaryNull_ShouldThrow()
         {
             var audioManager = new AudioManager(null, null);
 
@@ -19,33 +19,22 @@ namespace Padoru.Audio.Tests
         }
 
         [Test]
-        public void GetAudioFile_WhenDatabseNotNullAndDatabaseItemsCollectionNull_ShouldThrow()
-        {
-            var database = new FakeAudioManagerDatabase(null);
-            var audioManager = new AudioManager(database, null);
-
-            Assert.Throws<Exception>(() => audioManager.GetAudioFile(audioFileId1));
-        }
-
-        [Test]
-        public void GetAudioFile_WhenDatabseNotNullAndDatabaseItemsCollectionNotNullAndIdNotRegistered_ShouldThrow()
+        public void GetAudioFile_WhenDictionaryNotNullAndIdNotRegistered_ShouldThrow()
         {
             var items = new Dictionary<string, AudioFile>();
 
-            var database = new FakeAudioManagerDatabase(items);
-            var audioManager = new AudioManager(database, null);
+            var audioManager = new AudioManager(items, null);
 
             Assert.Throws<Exception>(() => audioManager.GetAudioFile(audioFileId1));
         }
 
         [Test]
-        public void GetAudioFile_WhenDatabseNotNullAndDatabaseItemsCollectionNotNullAndIdRegistered_ShouldNotThrow()
+        public void GetAudioFile_WhenDictionaryNotNullAndIdRegistered_ShouldNotThrow()
         {
             var items = new Dictionary<string, AudioFile>();
             items.Add(audioFileId1, new AudioFile());
 
-            var database = new FakeAudioManagerDatabase(items);
-            var audioManager = new AudioManager(database, null);
+            var audioManager = new AudioManager(items, null);
 
             Assert.DoesNotThrow(() => audioManager.GetAudioFile(audioFileId1));
         }

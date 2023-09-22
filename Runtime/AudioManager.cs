@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Debug = Padoru.Diagnostics.Debug;
 
@@ -6,33 +7,28 @@ namespace Padoru.Audio
 {
     public class AudioManager : IAudioManager
     {
-        private IAudioManagerDatabase database;
+        private IDictionary<string, AudioFile> audioFiles;
         private IAudioSourceRetriever retriever;
 
-        public AudioManager(IAudioManagerDatabase database, IAudioSourceRetriever retriever)
+        public AudioManager(IDictionary<string, AudioFile> audioFiles, IAudioSourceRetriever retriever)
         {
-            this.database = database;
+            this.audioFiles = audioFiles;
             this.retriever = retriever;
         }
 
         public AudioFile GetAudioFile(string id)
         {
-            if (database == null)
+            if (audioFiles == null)
             {
                 throw new Exception($"Could not get audio file, the database is null");
             }
 
-            if(database.Items == null)
-            {
-                throw new Exception($"Could not get audio file, the database items collection is null");
-            }
-
-            if (!database.Items.ContainsKey(id))
+            if (!audioFiles.ContainsKey(id))
             {
                 throw new Exception($"Invalid key {id}");
             }
 
-            return database.Items[id];
+            return audioFiles[id];
         }
 
         public AudioSource GetAudioSource()
