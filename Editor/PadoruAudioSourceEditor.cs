@@ -7,10 +7,12 @@ using UnityEngine;
 
 namespace Padoru.Audio.Editor
 {
+    // TODO: Get a list of strings from a provider with an attribute, that any project can implement however they want
+    // and look for the provider using the reflection utils from Padoru core as the console does for commands
     [CustomEditor(typeof(PadoruAudioSource))]
     public class PadoruAudioSourceEditor : UnityEditor.Editor
     {
-        private const string AUDIO_FILE_ID_PROPERTY_NAME = "fileId";
+        /*private const string AUDIO_FILE_ID_PROPERTY_NAME = "fileId";
         private const string TRACK_OBJECT_PROPERTY_NAME = "trackObject";
 
         private SerializedProperty audioFileIdProperty;
@@ -75,6 +77,6 @@ namespace Padoru.Audio.Editor
             var provider = CreateInstance<StringListSearchProvider>();
             provider.Init("List", audioManagerDatabase.Items.Keys.ToList(), OnFileIdSelected);
             return provider;
-        }
+        }*/
     }
 }
