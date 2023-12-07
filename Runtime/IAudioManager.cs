@@ -9,5 +9,9 @@ namespace Padoru.Audio
         AudioSource GetAudioSource();
 
         void ReturnAudioSource(AudioSource audioSource);
+
+        void AddAudioFile(string id, AudioFile audioFile);
+
+        void RemoveAudioFile(string id);
     }
 }

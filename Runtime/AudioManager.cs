@@ -10,6 +10,12 @@ namespace Padoru.Audio
         private IDictionary<string, AudioFile> audioFiles;
         private IAudioSourceRetriever retriever;
 
+        public AudioManager(IAudioSourceRetriever retriever):
+            this(new Dictionary<string, AudioFile>(), retriever)
+        {
+            
+        }
+        
         public AudioManager(IDictionary<string, AudioFile> audioFiles, IAudioSourceRetriever retriever)
         {
             this.audioFiles = audioFiles;
@@ -31,6 +37,36 @@ namespace Padoru.Audio
             return audioFiles[id];
         }
 
+        public void AddAudioFile(string id, AudioFile audioFile)
+        {
+            if (audioFiles == null)
+            {
+                throw new Exception($"Could not add audio file, the database is null");
+            }
+
+            if (audioFiles.ContainsKey(id))
+            {
+                throw new Exception($"Database already contains an audio file with id {id}");
+            }
+            
+            audioFiles[id] = audioFile;
+        }
+
+        public void RemoveAudioFile(string id)
+        {
+            if (audioFiles == null)
+            {
+                throw new Exception($"Could not remove audio file, the database is null");
+            }
+
+            if (!audioFiles.ContainsKey(id))
+            {
+                throw new Exception($"Invalid key {id}");
+            }
+            
+            audioFiles.Remove(id);
+        }
+        
         public AudioSource GetAudioSource()
         {
             if (retriever == null)
