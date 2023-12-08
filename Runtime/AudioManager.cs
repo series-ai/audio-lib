@@ -52,6 +52,16 @@ namespace Padoru.Audio
             audioFiles[id] = audioFile;
         }
 
+        public bool TryAddAudioFile(string id, AudioFile audioFile)
+        {
+            if (audioFiles == null)
+            {
+                throw new Exception($"Could not add audio file, the database is null");
+            }
+
+            return audioFiles.TryAdd(id, audioFile);
+        }
+        
         public void RemoveAudioFile(string id)
         {
             if (audioFiles == null)
@@ -65,6 +75,22 @@ namespace Padoru.Audio
             }
             
             audioFiles.Remove(id);
+        }
+        
+        public bool TryRemoveAudioFile(string id)
+        {
+            if (audioFiles == null)
+            {
+                throw new Exception($"Could not remove audio file, the database is null");
+            }
+
+            if (!audioFiles.ContainsKey(id))
+            {
+                return false;
+            }
+            
+            audioFiles.Remove(id);
+            return true;
         }
         
         public AudioSource GetAudioSource()

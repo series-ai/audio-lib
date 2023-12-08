@@ -12,6 +12,10 @@ namespace Padoru.Audio
 
         void AddAudioFile(string id, AudioFile audioFile);
 
+        bool TryAddAudioFile(string id, AudioFile audioFile);
+        
         void RemoveAudioFile(string id);
+        
+        bool TryRemoveAudioFile(string id);
     }
 }
