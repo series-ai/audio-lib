@@ -2,6 +2,8 @@
 using System;
 using UnityEngine;
 
+using Debug = Padoru.Diagnostics.Debug;
+
 namespace Padoru.Audio
 {
     public class PadoruAudioSource : MonoBehaviour
@@ -74,7 +76,14 @@ namespace Padoru.Audio
                 return;
             }
 
-            audioFile = audioManager.GetAudioFile(fileId);
+            try
+            {
+                audioFile = audioManager.GetAudioFile(fileId);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException("Failed to initialize Audio File", e);
+            }
 
             initialized = true;
         }
@@ -116,8 +125,15 @@ namespace Padoru.Audio
             }
 
             isPlaying = true;
-
-            audioSource = audioManager.GetAudioSource();
+            
+            try
+            {
+                audioSource = audioManager.GetAudioSource();
+            }
+            catch (Exception e)
+            {
+                Debug.LogException($"Failed to initialize audio source", e);
+            }
 
             if(audioSource == null)
             {
@@ -154,7 +170,14 @@ namespace Padoru.Audio
         {
             if (audioSource != null)
             {
-                audioManager.ReturnAudioSource(audioSource);
+                try
+                {
+                    audioManager.ReturnAudioSource(audioSource);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException($"Failed to return audio source", e);
+                }
 
                 audioSource = null;
             }
