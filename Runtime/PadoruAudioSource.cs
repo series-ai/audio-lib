@@ -28,7 +28,8 @@ namespace Padoru.Audio
             {
                 if (audioFile == null)
                 {
-                    throw new Exception("Null audio file");
+                    Debug.LogError("Null audio file");
+                    return false;
                 }
 
                 if (audioFile.Clip == null)
@@ -137,7 +138,8 @@ namespace Padoru.Audio
 
             if(audioSource == null)
             {
-                throw new Exception($"Audio manager failed to return an audio source");
+                Debug.LogError($"Audio manager failed to return an audio source");
+                return;
             }
 
             SetupAudioSource();
