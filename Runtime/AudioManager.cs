@@ -92,6 +92,27 @@ namespace Padoru.Audio
             audioFiles.Remove(id);
             return true;
         }
+		
+		/// <summary>
+        /// This removes all audio files with null clip references
+        /// </summary>
+        /// <returns></returns>
+        public void ClenupAudioClips()
+        {
+            var keysToRemove = new List<string>();
+            foreach (var key in audioFiles.Keys)
+            {
+                if (audioFiles[key].Clip == null)
+                {
+                    keysToRemove.Add(key);
+                }
+            }
+
+            foreach (var key in keysToRemove)
+            {
+                audioFiles.Remove(key);
+            }
+        }
         
         public AudioSource GetAudioSource()
         {
@@ -117,5 +138,6 @@ namespace Padoru.Audio
 
             retriever.ReturnAudio(audioSource);
         }
+
     }
 }
