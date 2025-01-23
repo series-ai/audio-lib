@@ -56,7 +56,7 @@ namespace Padoru.Audio
         {
             if (audioFiles == null)
             {
-                Debug.LogError($"Could not add audio file, the database is null");
+                Debug.LogError($"Could not add audio file, the database is null", Constants.AUDIO_LOG_CHANNEL);
             }
 
             return audioFiles.TryAdd(id, audioFile);
@@ -81,7 +81,7 @@ namespace Padoru.Audio
         {
             if (audioFiles == null)
             {
-                Debug.LogError($"Could not remove audio file, the database is null");
+                Debug.LogError($"Could not remove audio file, the database is null", Constants.AUDIO_LOG_CHANNEL);
             }
 
             if (!audioFiles.ContainsKey(id))
