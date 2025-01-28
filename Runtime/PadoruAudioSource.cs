@@ -28,25 +28,25 @@ namespace Padoru.Audio
             {
                 if (audioFile == null)
                 {
-                    Debug.LogError("Null audio file");
+                    Debug.LogError("Null audio file", Constants.AUDIO_LOG_CHANNEL);
                     return false;
                 }
 
                 if (audioFile.Clip == null)
                 {
-                    Debug.LogWarning("Null audio clip", gameObject);
+                    Debug.LogWarning("Null audio clip", Constants.AUDIO_LOG_CHANNEL, gameObject);
                     return false;
                 }
 
                 if (isPlaying)
                 {
-                    Debug.LogWarning("Audio is already playing", gameObject);
+                    Debug.LogWarning("Audio is already playing", Constants.AUDIO_LOG_CHANNEL, gameObject);
                     return false;
                 }
 
                 if (audioFile.Disabled)
                 {
-                    Debug.LogWarning("You are trying to play a disabled audio", gameObject);
+                    Debug.LogWarning("You are trying to play a disabled audio", Constants.AUDIO_LOG_CHANNEL, gameObject);
                     return false;
                 }
 
@@ -73,7 +73,7 @@ namespace Padoru.Audio
 
             if (audioManager == null)
             {
-                Debug.LogError("Could not initialize audio source due to null audio manager");
+                Debug.LogError("Could not initialize audio source due to null audio manager", Constants.AUDIO_LOG_CHANNEL);
                 return;
             }
 
@@ -83,7 +83,7 @@ namespace Padoru.Audio
             }
             catch (Exception e)
             {
-                Debug.LogException("Failed to initialize Audio File", e);
+                Debug.LogException("Failed to initialize Audio File", Constants.AUDIO_LOG_CHANNEL, e);
             }
 
             initialized = true;
@@ -133,12 +133,12 @@ namespace Padoru.Audio
             }
             catch (Exception e)
             {
-                Debug.LogException($"Failed to initialize audio source", e);
+                Debug.LogException($"Failed to initialize audio source", Constants.AUDIO_LOG_CHANNEL, e);
             }
 
             if(audioSource == null)
             {
-                Debug.LogError($"Audio manager failed to return an audio source");
+                Debug.LogError($"Audio manager failed to return an audio source", Constants.AUDIO_LOG_CHANNEL);
                 return;
             }
 
@@ -178,7 +178,7 @@ namespace Padoru.Audio
                 }
                 catch (Exception e)
                 {
-                    Debug.LogException($"Failed to return audio source", e);
+                    Debug.LogException($"Failed to return audio source", Constants.AUDIO_LOG_CHANNEL, e);
                 }
 
                 audioSource = null;
