@@ -1,5 +1,6 @@
 ﻿using Padoru.Core;
 using System;
+using Padoru.Core.Utils;
 using UnityEngine;
 
 using Debug = Padoru.Diagnostics.Debug;
@@ -15,9 +16,6 @@ namespace Padoru.Audio
         private AudioFile audioFile;
         private AudioSource audioSource;
         private bool isPlaying;
-
-        private float playTime;
-        private float audioDuration;
         private bool initialized;
 
         public event Action<PadoruAudioSource> OnAudioFinish;
@@ -97,22 +95,6 @@ namespace Padoru.Audio
             }
         }
 
-        private void OnDisable()
-        {
-            Stop();
-        }
-
-        private void Update()
-        {
-            if(audioFile  != null && isPlaying && !audioFile.Loop)
-            {
-                if(Time.time - playTime >= audioDuration)
-                {
-                    FinishAudio();
-                }
-            }
-        }
-
         public void Play()
         {
             if(!initialized)
@@ -144,10 +126,14 @@ namespace Padoru.Audio
 
             SetupAudioSource();
 
-            playTime = Time.time;
-            audioDuration = audioFile.Clip.length;
-
             audioSource.Play();
+
+            if (!audioFile.Loop)
+            {
+                var countdown = new Countdown(audioFile.Clip.length);
+                countdown.OnCountdownEnded += FinishAudio;
+                countdown.Start();
+            }
         }
 
         public void Stop()
